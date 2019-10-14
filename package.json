@@ -1,0 +1,14 @@
+{
+    "name": "socket-chat-example",
+    "version": "0.0.1",
+    "description": "p2p chatapp",
+    "dependencies": {
+        "express": "^4.10.2",
+        "express-session": "^1.16.1",
+        "http": "0.0.0",
+        "jquery": "^3.4.0",
+        "json": "^9.0.6",
+        "path": "^0.12.7",
+        "socket.io": "^2.1.1"
+    }
+}

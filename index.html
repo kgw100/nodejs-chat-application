@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko" dir="ltr">
+ <head>
+       <meta charset="utf-8">
+  <title>Chat Application</title>
+  <link rel='stylesheet' href='./css/style.css?ver=2' type='text/css'/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script src="chat.js"></script>
+  <script type="text/javascript"> // 페이지 이탈 처리 JS
+  window.onbeforeunload = function (e) {
+    e = e || window.event;
+	    // For IE<8 and Firefox prior to version 4
+    if (e) {
+      e.returnValue = '페이지를 이동하시겠습니까?(데이터가 손실됩니다.)';
+    }
+
+    // For Chrome, Safari, IE8+ and Opera 12+
+
+    return '페이지를 이동하시겠습니까?(데이터가 손실됩니다.)';
+  }
+  </script>
+</head>
+<body >
+
+  <div class="onlineUsersContainer">
+      <div class="userInfo">환영합니다.<br>
+        <label id="myName">???</label>님</div>
+        <div id="Empty">상대를 기다리는 중..</div>
+      <div><ul id="onlineUsers"></ul></div>
+  </div>
+  <div class="chatContainer">
+    <div id="messages"></div>
+    <span id="notifyTyping"></span>
+    <button onclick="location.href='#open-modal' " class="caution">주의 사항</button>
+    <div id="open-modal" class="modal-window">
+      <div>
+        <a href="#modal-close" class="modal-close">close &times;</a>
+        <h1>Beta 1.0v P2P 채팅 <h1>
+        <p id="cau_sub"> [주의 사항]</p>
+        <br>
+        <p>1. 이 APP은 저장소와 중앙서버가 존재하지 않으며 중계 서버(IP 식별)만 존재합니다.(새로 고침, 종료시 데이터 소멸) </p>
+        <p>2. 1:1 데이터 전달 통신 방식이며 유저들 끼리는 네트워크만 공유하여 모든 유저끼리 각각 채팅이 가능합니다. </p>
+        <p>3. 기능 오류 발견 시 "kgw100@yonsei.ac.kr"로 제보 해주시면 소정의 상품을 드리겠습니다. </p>
+        <br><p> 감사합니다:)</p>
+        <button type="button" onclick="location.href='http://www.emocert.com';">EMOCERT 홈페이지</button>
+      </div>
+    </div>
+  </a>
+    <!-- <div id="popup_content"> -->
+
+     <!-- <a href="#" onclick="hide('popup_content')">Ok!</a> -->
+
+    <form id="form" action="" onsubmit="return submitfunction();" >
+        <input type="hidden" id="user" value="" /><input id="m" autocomplete="off" onkeyup="notifyTyping();" placeholder="메시지 입력.." /><input onclick="return submitfunction();"type="button" id="button" value="보내기"/>
+
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,494 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-size: 16px; font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif; overflow: hidden;}
+html, body{
+  width: 100vw;
+  height: 100vh;
+}
+#form, #messages { display: none; }
+
+#notifyTyping
+{
+  text-align: center;
+}
+h2{
+  font-size:2em;
+}
+
+.userInfo {
+       color: #FFF;
+       font-weight: bold;
+       font-size: 1em;
+       width: 100%;
+       border:0.2em outset #2E8E12;
+       padding: 0.7em 0.3em;
+       background: #2E8E12;
+       text-align: center;
+      }
+#Empty{
+  padding-top: 0.5em;
+  text-align: center;
+  font-weight: bold;
+}
+.onlineUsersContainer {
+  width: 20%; float: right; height: 100%;
+  z-index: 3;
+  max-height: 100%; background-color: white;
+ position: relative;
+   overflow-y: scroll;
+   overflow-x: hidden;
+ }
+.Users_fixed
+{
+  z-index: 3;
+  width: 20%;
+  position: fixed;
+  top: 0;
+}
+.Userinfo_fixed
+{
+  z-index: 3;
+  width: 20%;
+  position: fixed;
+  top: 0;
+  right:0;
+}
+.onlineUsersContainer ul li { list-style-type: none; cursor: pointer; margin: 0; padding: 12px; border-bottom: 0.3px solid rgb(0,0,0,0.4);height: 100%; display:inline-block;width: 100%;
+
+  /* border-radius: 10px;  */
+}
+
+.onlineUsersContainer ul li::before { content: "●"; color: #2D9F0B; font-size: 1em; font-weight: bold; padding: 0.2em; }
+
+.onlineUsersContainer ul li.active { background: rgb(131, 228, 0, 0.3) }
+
+.onlineUsersContainer ul li:hover { background: rgb(253, 216, 0, 0.5) }
+
+.onlineUsersContainer li a { color: black; text-decoration:none; }
+
+.chatContainer { width: 80%; float: left; min-height: 100%;
+  /* border-left: 3px solid #2E8E12;  */
+  background:
+  /* rgb(239, 239, 240, 0.3); */
+  rgb(48, 194, 120, 0.4);
+}
+
+form { background: #2E8E12; padding: 0.3em; position: fixed; bottom: 0; width: 80%; }
+
+form input { border: 0; padding: 1em; width: 90%; margin-right: .5%; }
+
+form #button { color:#FFF; background: #34BB0C;
+  font-size: 0.7em;border: none; padding: 1em;  width: 9%;
+font-weight: bold;}
+
+#messages { list-style-type: none; margin: 0; padding: 0; position: absolute; top:4.5em; bottom: 4.3em;
+  float: left; width: 100%;  overflow-y:scroll;
+}
+
+#notifyTyping { font-size: 1em; position: fixed; width: 100%; }
+
+.chatNotificationCount { color: #FFF; display: none; float: right; border-radius: 1em; border: 0.1em solid #2E8E12; background: #34BB0C; padding: 0.1em 0.3em; }
+
+/* #messages li.chatMessageRight { border-radius: 25px; padding: 11px 18px; background: #56a8e3; color: #ffffff; position: relative; display: inline-block; max-width: 500px; float: right; clear: both; margin: 12px 0px; }
+#messages li.chatMessageRight:before { border-bottom-color: #56a8e3; border-radius: 20px / 10px; left: auto; right: -7px; content: ''; position: absolute; }
+
+#messages li.chatMessageRight:after { border: 8px solid transparent; border-bottom-color: #56a8e3; border-radius: 20px / 10px; left: auto; right: -4px; bottom: 5px; content: ''; position: absolute; } */
+
+
+
+#messages div.chatMessageRight{
+  border-radius: 1em;
+  background-color: #FCFD01;
+  font-weight: bold;
+  padding: 0.7em;
+  float: right;
+  max-width: 35%;
+  clear: both;
+  position: relative;
+  display: inline-block;
+  word-break:break-all;
+  margin-right: 20%;
+  margin-top: 1em;
+  margin-bottom:0.5em;
+  }
+  #messages div.chatMessageLeft{
+    border-radius: 1em;
+    word-break:break-all;
+    background-color: rgb(48, 194, 244);
+    padding: 0.7em;
+    float: left;
+    font-weight: bold;
+    max-width: 35%;
+    clear: both;
+    height: auto;
+    position: relative;
+    display: inline-block;
+    margin-left: 1.8%;
+    margin-top: 1em;
+    margin-bottom:0.5em;
+    }
+#messages span.msg_time{
+  position: relative;
+  left: 0;
+  bottom: -3.1em;
+  float: right;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.6em;
+  font-weight: bold;
+}
+#messages span.msg_time_send{
+  position: relative;
+  float: right;
+  top : 3.1em;
+  color: rgba(0,0,0,0.3);
+  font-size: 0.6em;
+  font-weight: bold;
+}
+
+
+.modal-window {
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.75);
+  top: 0rem;
+  right: 0rem;
+  bottom: 0rem;
+  left: 0;
+  z-index: 999;
+  display: none;
+  pointer-events: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  height: auto;
+}
+.modal-window:target {
+  display:block;
+  pointer-events:visible;
+}
+
+
+.modal-window>div {
+  width: 30em;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  background: #fff;
+  color: #444;
+}
+
+.modal-window header {
+  font-weight: bold;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 3em;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 6em;
+  text-decoration: none;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 1em;
+}
+.caution{
+  position: relative;
+  float: left;
+  background: green;
+  font-weight: bold;
+  cursor: pointer;
+  width:8em;
+  height: 3.2em;
+}
+.cau_fixed{
+  position: fixed;
+  top: 0;
+  left:0;
+}
+#cau_sub{
+  font-size: 1em;
+  color:red;
+}
+p
+{
+  font-size: 0.8em;
+}
+.caution a{
+  text-decoration: none !important;
+  color: black;
+  height: 100%;
+}
+.caution a:active{
+  color: white;
+}
+.caution:hover{
+  color: white;
+}
+
+@media screen and (max-width: 45em)
+{
+  .userInfo {
+         color: #FFF;
+         font-size: 1em;
+         width: 100%;
+         border:0.2em outset #2E8E12;
+         padding: 0.7em 0.3em;
+        }
+  #Empty{
+    padding-top: 0.5em;
+  }
+  .onlineUsersContainer {
+    width: 28%; float: right; height: 100%;
+    max-height: 100%;
+   }
+  .Users_fixed
+  {
+    width: 28%;
+  }
+  .Userinfo_fixed
+  {
+    width: 28%;
+  }
+  .onlineUsersContainer ul li { list-style-type: none; cursor: pointer; margin: 0; padding: 12px; border-bottom: 0.3px solid rgb(0,0,0,0.4);height: 100%; display:inline-block;width: 100%;
+
+    /* border-radius: 10px;  */
+  }
+
+  .onlineUsersContainer ul li::before { content: "●"; color: #2D9F0B; font-size: 1em; font-weight: bold; padding: 0.2em; }
+
+  .onlineUsersContainer ul li.active { background: rgb(131, 228, 0, 0.3) }
+
+  .onlineUsersContainer ul li:hover { background: rgb(253, 216, 0, 0.5) }
+
+  .onlineUsersContainer li a { color: black; text-decoration:none; }
+
+  .chatContainer { width:72%; float: left; min-height: 100%;
+    /* border-left: 3px solid #2E8E12;  */
+    background:
+    /* rgb(239, 239, 240, 0.3); */
+    rgb(48, 194, 120, 0.4);
+  }
+
+  form { background: #2E8E12; padding: 0.3em; position: fixed; bottom: 0; width: 72%; }
+
+  form input { border: 0; padding: 0.7em; width: 85%; }
+
+  form #button { color:#FFF; background: #34BB0C;
+    font-size: 0.7em;border: none; padding: 0.7em;  width: 13.5%;
+    margin-left: 0.5%;
+  font-weight: bold;}
+
+  #messages { list-style-type: none; margin: 0; padding: 0; position: absolute; top:4.5em; bottom: 4.3em;
+    float: left; width: 100%;  overflow-y:scroll;
+  }
+
+  #notifyTyping { font-size: 1em; position: fixed; width: 100%; }
+
+  .chatNotificationCount { color: #FFF; display: none; float: right; border-radius: 1em; border: 0.1em solid #2E8E12; background: #34BB0C; padding: 0.1em 0.3em; }
+
+  #messages div.chatMessageRight{
+    border-radius: 1em;
+    padding: 0.7em;
+    max-width: 27%;
+    margin-right: 27%;
+    margin-top: 1em;
+    margin-bottom:0.5em;
+    }
+    #messages div.chatMessageLeft{
+      border-radius: 1em;
+      padding: 0.7em;
+      max-width: 27%;
+      margin-left: 1.8%;
+      margin-top: 1em;
+      margin-bottom:0.5em;
+      }
+  #messages span.msg_time{
+    bottom: -3.1em;
+   font-size: 0.6em;
+  }
+  #messages span.msg_time_send{
+    top : 3.1em;
+    font-size: 0.6em;
+  }
+
+  .modal-window {
+    height: auto;
+  }
+
+  .modal-window>div {
+    width: 20em;
+    margin: 10% auto;
+    padding: 2rem;
+  }
+  .modal-close {
+    line-height: 3em;
+    font-size: 80%;
+    width: 6em;
+  }
+
+  .modal-window h1 {
+    font-size: 150%;
+    margin: 0 0 1em;
+  }
+  #cau_sub{
+    color: red;
+    font-size: 1em;
+  }
+  .caution{
+    width:6em;
+    height: 3em;
+  }
+  p
+  {
+    font-size: 0.6em;
+  }
+  h2{
+    font-size: 2em;
+  }
+
+}
+@media screen and (max-width: 24em)
+{
+  .userInfo {
+         color: #FFF;
+         font-size: 0.7em;
+         width: 100%;
+         border:0.2em outset #2E8E12;
+         padding: 0.7em 0.2em;
+        }
+  #Empty{
+    padding-top: 0.5em;
+  }
+  .onlineUsersContainer {
+    width: 28%; float: right; height: 100%;
+    max-height: 100%;
+   }
+  .Users_fixed
+  {
+    width: 28%;
+  }
+  .Userinfo_fixed
+  {
+    width: 28%;
+  }
+  .onlineUsersContainer ul li { list-style-type: none; cursor: pointer; margin: 0; padding: 12px; border-bottom: 0.3px solid rgb(0,0,0,0.4);height: 100%; display:inline-block;width: 100%; font-size:0.8em;
+
+    /* border-radius: 10px;  */
+  }
+
+  .onlineUsersContainer ul li::before { content: "●"; color: #2D9F0B; font-size: 0.7em; font-weight: bold; padding: 0.2em; }
+
+  .onlineUsersContainer ul li.active { background: rgb(131, 228, 0, 0.3) }
+
+  .onlineUsersContainer ul li:hover { background: rgb(253, 216, 0, 0.5) }
+
+  .onlineUsersContainer li a { color: black; text-decoration:none; }
+
+  .chatContainer { width:72%; float: left; min-height: 100%;
+    /* border-left: 3px solid #2E8E12;  */
+    background:
+    /* rgb(239, 239, 240, 0.3); */
+    rgb(48, 194, 120, 0.4);
+  }
+
+  form { background: #2E8E12; padding: 0.3em; position: fixed; bottom: 0; width: 72%; }
+
+  form input { border: 0; padding: 0.7em; width: 80%; }
+
+  form #button { color:#FFF; background: #34BB0C;
+    font-size: 0.7em;border: none; padding: 0.7em;  width: 18%;
+    margin-left: 0.5%;
+  font-weight: bold;}
+
+  #messages { list-style-type: none; margin: 0; padding: 0; position: absolute; top:4.5em; bottom: 4.3em;
+    float: left; width: 100%;  overflow-y:scroll;
+  }
+
+  #notifyTyping { font-size: 1em; position: fixed; width: 100%; }
+
+  .chatNotificationCount { color: #FFF; display: none; float: right; border-radius: 1em; border: 0.1em solid #2E8E12; background: #34BB0C; padding: 0.1em 0.3em; }
+
+  #messages div.chatMessageRight{
+    border-radius: 0.6em;
+    padding: 0.6em;
+    text-align:start
+    max-width: 27%;
+    margin-right: 30%;
+    margin-top: 1em;
+    margin-bottom:0.5em;
+    }
+    #messages div.chatMessageLeft{
+      border-radius: 0.6em;
+      padding: 0.6em;
+      max-width: 27%;
+      margin-left: 1.8%;
+      margin-top: 1em;
+      margin-bottom:0.5em;
+      }
+  #messages span.msg_time{
+
+    bottom: -3.1em;
+   font-size: 0.6em;
+  }
+  #messages span.msg_time_send{
+
+    top : 3.1em;
+    font-size: 0.6em;
+  }
+
+  .modal-window {
+    height: auto;
+  }
+
+  .modal-window>div {
+    width: 18em;
+    margin: 10% auto;
+    padding: 2rem;
+  }
+  .modal-close {
+    line-height: 3em;
+    font-size: 80%;
+    width: 6em;
+  }
+
+  .modal-window h1 {
+    font-size: 150%;
+    margin: 0 0 1em;
+  }
+  #cau_sub{
+    color: red;
+    font-size: 1em;
+  }
+  .caution{
+    width:6em;
+    height: 3em;
+  }
+  p
+  {
+    font-size: 0.6em;
+  }
+  h2{
+    font-size: 2em;
+  }
+
+}
+@media screen and (max-width: 22em)
+{
+ form { background: #2E8E12; padding: 0.3em; position: fixed; bottom: 0; width: 72%; }
+
+  form input { border: 0; padding: 0.7em; width: 78%; }
+
+  form #button { color:#FFF; background: #34BB0C;
+    font-size: 0.7em;border: none; padding: 0.7em;  width: 19%;
+    margin-left: 2%;
+  font-weight: bold;}
+
+}
